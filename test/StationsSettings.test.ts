@@ -1,3 +1,4 @@
+import * as chai from 'chai';
 import StationSettings from '../src/station-settings/StationSettings';
 
 const assert = require('assert');
