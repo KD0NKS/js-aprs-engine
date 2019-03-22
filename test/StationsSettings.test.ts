@@ -24,7 +24,7 @@ describe('StationSettings Tests', () => {
         let settings: StationSettings = {
             callsign: "T3ST"
             , passcode: 1234
-            , ssid: 7
+            , ssid: '7'
         };
 
         it("Should return callsign: T3ST", () => {
