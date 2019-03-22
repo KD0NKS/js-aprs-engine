@@ -1,18 +1,11 @@
-import * as chai from 'chai';
-import StationSettings from '../src/StationSettings';
-import PouchDB from 'pouchdb-node';
-
-PouchDB.plugin(require('pouchdb-adapter-memory'));
+import StationSettings from '../src/station-settings/StationSettings';
 
 const assert = require('assert');
 const should = chai.should();
-//const expect = chai.expect;
 
 describe('StationSettings Tests', () => {
-    let db = new PouchDB('aprstest', { adapter: 'memory' });
-
     describe("#StationSettings - Default values", () => {
-        let settings = new StationSettings(); // private db: PouchDB.Database;
+        let settings = new StationSettings();
 
         it("Should return callsign: N0CALL", () => {
             assert.equal("N0CALL", settings.callsign);
