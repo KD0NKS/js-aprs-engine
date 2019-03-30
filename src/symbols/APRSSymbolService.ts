@@ -2,7 +2,7 @@ import APRSSymbol from './APRSSymbol';
 import StringUtil from '../util/StringUtil';
 
 interface IAPRSSymbolService {
-    GetIcon(symbolTableId: string, symbolCode: string): any;
+    GetAPRSSymbol(symbolTableId: string, symbolCode: string): any;
 }
 
 /**
@@ -289,7 +289,7 @@ export default class APRSSymbolService implements IAPRSSymbolService {
         ];
     }
 
-    private GetBaseIcon(symbolTableId: string, symbolCode: string): APRSSymbol {
+    private GetBaseSymbol(symbolTableId: string, symbolCode: string): APRSSymbol {
         var retVal = null;
 
         // lets try to make sure we only get 1 result here
@@ -327,10 +327,10 @@ export default class APRSSymbolService implements IAPRSSymbolService {
      * @param symbolTableId
      * @param symbolCode
      */
-    public GetIcon(symbolTableId: string, symbolCode: string) {
+    public GetAPRSSymbol(symbolTableId: string, symbolCode: string) {
         var retVal: any = {};
 
-        retVal['icon'] = this.GetBaseIcon(symbolTableId, symbolCode);
+        retVal['symbol'] = this.GetBaseSymbol(symbolTableId, symbolCode);
         retVal['overlay'] = this.GetOverlay(symbolTableId);
 
         return retVal;
