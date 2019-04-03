@@ -51,6 +51,7 @@ describe('APRSSymbolService Tests', () => {
 
     describe("Should return a known alt table symbol with an overlay.", () => {
         let retVal = symbolSvc.GetAPRSSymbol('0', 'T');
+        console.log(retVal.overlay);
 
         it("Should return a Thunderstorm symbol with overlay.", () => {
             assert.equal('T', retVal.symbol.key);
@@ -63,8 +64,7 @@ describe('APRSSymbolService Tests', () => {
 
             assert.equal('0', retVal.overlay.key);
             assert.equal('/Overlay/Zero.gif', retVal.overlay.value);
-
-            should.not.exist(retVal.overlay.name);
+            should.equal('0', retVal.overlay.name);
         });
     });
 

@@ -3,7 +3,8 @@ export default class APRSSymbol {
         Object.assign(this, init);
     }
 
+    public name: string;
     public key: string;
     public value: string;
-    public name: string;
+    public isAllowOverlay: boolean = false;
 }
