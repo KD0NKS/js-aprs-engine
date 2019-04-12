@@ -1,7 +1,7 @@
-export default class StationSettings {
-    constructor() { }
-
-    public callsign: string = "N0CALL";
+export class StationSettings {
+    public callsign = "N0CALL";
     public ssid: number;
-    public passcode: number = -1;
+    public passcode = -1;
+
+    constructor() { }
 }

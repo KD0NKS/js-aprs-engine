@@ -1,4 +1,4 @@
-import StationSettings from './src/StationSettings';
+import { StationSettings } from './src/StationSettings';
 
 export {
     StationSettings
