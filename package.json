@@ -4,9 +4,6 @@
     "description": "Engine for bundling libraries and settings to run an APRS application.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": [
-        "dist/"
-    ],
     "scripts": {
         "build": "tsc",
         "setup": "npm install",
