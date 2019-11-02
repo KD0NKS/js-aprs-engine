@@ -1,30 +1,17 @@
 import assert from 'assert';
 import * as chai from 'chai';
 import { StationSettings } from '../src/StationSettings';
-//import PouchDB from 'pouchdb-node';
-
-//PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const should = chai.should();
-//const expect = chai.expect;
+const expect = chai.expect;
 
 describe('StationSettings Tests', () => {
-    //let db = new PouchDB('aprstest', { adapter: 'memory' });
+    describe("Should instantiate a StationSettings instance using all default parameters", () => {
+        const settings = new StationSettings();
 
-    describe("#StationSettings - Default values", () => {
-        const settings = new StationSettings(); // private db: PouchDB.Database;
-
-        it("Should return callsign: N0CALL", () => {
-            assert.equal("N0CALL", settings.callsign);
-        });
-
-        it("Should return passcode: -1", () => {
-            assert.equal(-1, settings.passcode);
-        });
-
-        it("Should return ssid: null", () => {
-            should.not.exist(settings.ssid);
-        });
+        expect(settings.callsign).to.equal('N0CALL');
+        expect(settings.passcode).to.equal('-1');
+        should.not.exist(settings.ssid);
     });
 
     describe("#StationSettings - Set values", () => {
@@ -34,16 +21,8 @@ describe('StationSettings Tests', () => {
             , ssid: 7
         };
 
-        it("Should return callsign: T3ST", () => {
-            assert.equal("T3ST", settings.callsign);
-        });
-
-        it("Should return passcode: 1234", () => {
-            assert.equal(1234, settings.passcode);
-        });
-
-        it("Should return ssid: null", () => {
-            assert.equal(7, settings.ssid);
-        });
+        expect(settings.callsign).to.equal('T3ST');
+        expect(settings.passcode).to.equal(1234);
+        expect(settings.ssid).to.equal(7);
     });
 });
