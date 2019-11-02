@@ -1,49 +1,40 @@
-import assert from 'assert';
 import * as chai from 'chai';
 import { StationSettings } from '../src/StationSettings';
-//import PouchDB from 'pouchdb-node';
-
-//PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const should = chai.should();
-//const expect = chai.expect;
 
 describe('StationSettings Tests', () => {
-    //let db = new PouchDB('aprstest', { adapter: 'memory' });
+    describe('Test StationSettings constructor.', () => {
+        it("Should instantiate a StationSettings instance using all default parameters", () => {
+            const settings: StationSettings = new StationSettings();
 
-    describe("#StationSettings - Default values", () => {
-        const settings = new StationSettings(); // private db: PouchDB.Database;
-
-        it("Should return callsign: N0CALL", () => {
-            assert.equal("N0CALL", settings.callsign);
-        });
-
-        it("Should return passcode: -1", () => {
-            assert.equal(-1, settings.passcode);
-        });
-
-        it("Should return ssid: null", () => {
+            settings.should.have.property('callsign').equal('N0CALL');
+            settings.should.have.property('passcode').equal(-1);
             should.not.exist(settings.ssid);
         });
-    });
 
-    describe("#StationSettings - Set values", () => {
-        const settings: StationSettings = {
-            callsign: "T3ST"
-            , passcode: 1234
-            , ssid: 7
-        };
+        it("Should instantiate a StationSettings instance using given parameters", () => {
+            const settings: StationSettings = {
+                callsign: "T3ST"
+                , passcode: 1234
+                , ssid: 7
+            };
 
-        it("Should return callsign: T3ST", () => {
-            assert.equal("T3ST", settings.callsign);
+            settings.should.have.property('callsign').equal('T3ST');
+            settings.should.have.property('passcode').equal(1234);
+            settings.should.have.property('ssid').equal(7);
         });
 
-        it("Should return passcode: 1234", () => {
-            assert.equal(1234, settings.passcode);
-        });
+        it("Should StationSettings properties set properly", () => {
+            const settings: StationSettings = new StationSettings();
 
-        it("Should return ssid: null", () => {
-            assert.equal(7, settings.ssid);
+            settings.callsign = 'T3ST';
+            settings.passcode = 1234;
+            settings.ssid = 7;
+
+            settings.should.have.property('callsign').equal('T3ST');
+            settings.should.have.property('passcode').equal(1234);
+            settings.should.have.property('ssid').equal(7);
         });
     });
 });
