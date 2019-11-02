@@ -14,6 +14,7 @@ before_script:
 - greenkeeper-lockfile-update
 script:
 - npm run test
+- echo "Success!"
 after_success:
 - npm run coverage
 after_script: greenkeeper-lockfile-upload

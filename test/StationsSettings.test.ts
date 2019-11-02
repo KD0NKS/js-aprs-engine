@@ -1,28 +1,40 @@
-import assert from 'assert';
 import * as chai from 'chai';
 import { StationSettings } from '../src/StationSettings';
 
 const should = chai.should();
-const expect = chai.expect;
 
 describe('StationSettings Tests', () => {
-    describe("Should instantiate a StationSettings instance using all default parameters", () => {
-        const settings = new StationSettings();
+    describe('Test StationSettings constructor.', () => {
+        it("Should instantiate a StationSettings instance using all default parameters", () => {
+            const settings: StationSettings = new StationSettings();
 
-        expect(settings.callsign).to.equal('N0CALL');
-        expect(settings.passcode).to.equal('-1');
-        should.not.exist(settings.ssid);
-    });
+            settings.should.have.property('callsign').equal('N0CALL');
+            settings.should.have.property('passcode').equal(-1);
+            should.not.exist(settings.ssid);
+        });
 
-    describe("#StationSettings - Set values", () => {
-        const settings: StationSettings = {
-            callsign: "T3ST"
-            , passcode: 1234
-            , ssid: 7
-        };
+        it("Should instantiate a StationSettings instance using given parameters", () => {
+            const settings: StationSettings = {
+                callsign: "T3ST"
+                , passcode: 1234
+                , ssid: 7
+            };
 
-        expect(settings.callsign).to.equal('T3ST');
-        expect(settings.passcode).to.equal(1234);
-        expect(settings.ssid).to.equal(7);
+            settings.should.have.property('callsign').equal('T3ST');
+            settings.should.have.property('passcode').equal(1234);
+            settings.should.have.property('ssid').equal(7);
+        });
+
+        it("Should StationSettings properties set properly", () => {
+            const settings: StationSettings = new StationSettings();
+
+            settings.callsign = 'T3ST';
+            settings.passcode = 1234;
+            settings.ssid = 7;
+
+            settings.should.have.property('callsign').equal('T3ST');
+            settings.should.have.property('passcode').equal(1234);
+            settings.should.have.property('ssid').equal(7);
+        });
     });
 });
