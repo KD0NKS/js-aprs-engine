@@ -1,5 +1,5 @@
 import * as chai from 'chai';
-import { StationSettings } from '../src/StationSettings';
+import { StationSettings } from '../src/station-settings/StationSettings';
 
 const should = chai.should();
 
@@ -17,12 +17,12 @@ describe('StationSettings Tests', () => {
             const settings: StationSettings = {
                 callsign: "T3ST"
                 , passcode: 1234
-                , ssid: 7
+                , ssid: '7'
             };
 
             settings.should.have.property('callsign').equal('T3ST');
             settings.should.have.property('passcode').equal(1234);
-            settings.should.have.property('ssid').equal(7);
+            settings.should.have.property('ssid').equal('7');
         });
 
         it("Should StationSettings properties set properly", () => {
@@ -30,11 +30,11 @@ describe('StationSettings Tests', () => {
 
             settings.callsign = 'T3ST';
             settings.passcode = 1234;
-            settings.ssid = 7;
+            settings.ssid = '7';
 
             settings.should.have.property('callsign').equal('T3ST');
             settings.should.have.property('passcode').equal(1234);
-            settings.should.have.property('ssid').equal(7);
+            settings.should.have.property('ssid').equal('7');
         });
     });
 });
