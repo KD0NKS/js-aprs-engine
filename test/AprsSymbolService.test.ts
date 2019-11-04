@@ -8,7 +8,7 @@ describe('APRSSymbolService Tests', () => {
     let symbolSvc = new APRSSymbolService();
 
     describe("Should return crosshair with no overlay - unknown symbol", () => {
-        let retVal = symbolSvc.GetAPRSSymbol('/', '}');
+        let retVal = symbolSvc.GetAPRSSymbol('}', '/');
 
         it("Should return a crosshair symbol.", () => {
             assert.equal('', retVal.symbol.key);
@@ -22,9 +22,9 @@ describe('APRSSymbolService Tests', () => {
     });
 
     describe("Should return a known primary table symbol with no overlay - truck symbol", () => {
-        let retVal = symbolSvc.GetAPRSSymbol('/', 'k');
+        let retVal = symbolSvc.GetAPRSSymbol('k', '/');
 
-        it("Should return a crosshair symbol.", () => {
+        it("Should return a truck symbol.", () => {
             assert.equal('/k', retVal.symbol.key);
             assert.equal('/PrimaryTable/Truck.gif', retVal.symbol.value);
             assert.equal('Truck', retVal.symbol.name);
@@ -36,7 +36,7 @@ describe('APRSSymbolService Tests', () => {
     });
 
     describe("Should return a known alt table symbol with no overlay - snow symbol", () => {
-        let retVal = symbolSvc.GetAPRSSymbol(null, '*');
+        let retVal = symbolSvc.GetAPRSSymbol('*', null);
 
         it("Should return an snow symbol.", () => {
             assert.equal('*', retVal.symbol.key);
@@ -50,7 +50,7 @@ describe('APRSSymbolService Tests', () => {
     });
 
     describe("Should return a known alt table symbol with an overlay.", () => {
-        let retVal = symbolSvc.GetAPRSSymbol('0', 'T');
+        let retVal = symbolSvc.GetAPRSSymbol('T', '0');
 
         it("Should return a Thunderstorm symbol with overlay.", () => {
             assert.equal('T', retVal.symbol.key);
@@ -68,7 +68,7 @@ describe('APRSSymbolService Tests', () => {
     });
 
     describe("Should return a known alt table symbol.  Overlay invalid.", () => {
-        let retVal = symbolSvc.GetAPRSSymbol('Ā', 'T');
+        let retVal = symbolSvc.GetAPRSSymbol('T', 'Ā');
 
         it("Should return a Thunderstorm symbol with overlay.", () => {
             assert.equal('T', retVal.symbol.key);
@@ -107,7 +107,11 @@ describe('APRSSymbolService Tests', () => {
         describe("Should not return a symbol.", () => {
             let symbol = symbolSvc.GetSymbolByKey('/!9');
 
-            should.not.exist(symbol);
+            it("Should return a crosshair symbol.", () => {
+                assert.equal('', symbol.key);
+                assert.equal('/Crosshair.gif', symbol.value);
+                assert.equal('Crosshair', symbol.name);
+            });
         });
     });
 });

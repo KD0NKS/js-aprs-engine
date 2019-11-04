@@ -2,15 +2,20 @@ import { APRSSymbol } from './APRSSymbol';
 import { StringUtil } from '../util/StringUtil';
 
 interface IAPRSSymbolService {
-    GetAPRSSymbol(symbolTableId: string, symbolCode: string): any;
+    symbols: APRSSymbol[];
+    overlays: APRSSymbol[];
+
+    GetAPRSSymbol(symbolCode: string, symbolTableId?: string): any;
 }
 
 /**
  * Defines a set of symbols to be used as defined in chapter 20 of the APRS spec.
  */
 export class APRSSymbolService implements IAPRSSymbolService {
-    private symbols: APRSSymbol[];
-    private overlays: APRSSymbol[];
+    public symbols: APRSSymbol[];
+    public overlays: APRSSymbol[];
+
+    // TODO: allow user to define their own default?
     private readonly CROSSHAIR = new APRSSymbol({
         key: ''
         , value: "/Crosshair.gif"
@@ -289,26 +294,6 @@ export class APRSSymbolService implements IAPRSSymbolService {
         ];
     }
 
-    private GetBaseSymbol(symbolTableId: string, symbolCode: string): APRSSymbol {
-        var retVal = null;
-
-        // lets try to make sure we only get 1 result here
-        if(!StringUtil.IsNullOrWhiteSpace(symbolTableId) && symbolTableId === '/') {
-            retVal = this.symbols.filter(function(s) {
-                return s.key == symbolTableId + symbolCode;
-            });
-        } else {
-            retVal = this.symbols.filter(function(s) {
-                return s.key == symbolCode;
-            });
-        }
-
-        if(retVal && retVal.length > 0)
-            return retVal[0];
-        else
-            return this.CROSSHAIR
-    }
-
     private GetOverlay(symbolTableId: string): APRSSymbol {
         if(!StringUtil.IsNullOrWhiteSpace(symbolTableId) && symbolTableId !== '/') {
             var retVal = this.overlays.filter(function(c) {
@@ -324,13 +309,20 @@ export class APRSSymbolService implements IAPRSSymbolService {
 
     /**
      * This will return an object with the symbol and an overlay if it has one.
-     * @param symbolTableId
-     * @param symbolCode
+     * @param symbolTableId string - required
+     * @param symbolCode string - optional
      */
-    public GetAPRSSymbol(symbolTableId: string, symbolCode: string) {
+    public GetAPRSSymbol(symbolCode: string, symbolTableId?: string): any {
         var retVal: any = {};
+        var key = '';
 
-        retVal['symbol'] = this.GetBaseSymbol(symbolTableId, symbolCode);
+        // lets try to make sure we only get 1 result here
+        if(!StringUtil.IsNullOrWhiteSpace(symbolTableId) && symbolTableId === '/') {
+            retVal['symbol'] = this.GetSymbolByKey(symbolTableId + symbolCode);
+        } else {
+            retVal['symbol'] = this.GetSymbolByKey(symbolCode);
+        }
+
         retVal['overlay'] = this.GetOverlay(symbolTableId);
 
         return retVal;
@@ -344,7 +336,18 @@ export class APRSSymbolService implements IAPRSSymbolService {
         return this.symbols
     }
 
+    /**
+     * @param key String - Table symbol + Symbol Code
+     *
+     * @returns APRSSymbol - If not found, it will return a crosshair symbol
+     */
     public GetSymbolByKey(key: string): APRSSymbol {
-        return this.symbols.find(x => x.key == key);
+        var retVal = this.symbols.find(x => x.key == key);
+
+        if(retVal == null) {
+            retVal = this.CROSSHAIR;
+        }
+
+        return retVal;
     }
 }
