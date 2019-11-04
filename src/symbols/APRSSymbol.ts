@@ -5,6 +5,6 @@ export class APRSSymbol {
 
     public name: string;
     public key: string;
-    public value: string;
+    public value: any;  // Yeah, yeah, yeah, it's an image...
     public isAllowOverlay: boolean = false;
 }
