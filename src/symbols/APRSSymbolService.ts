@@ -1,3 +1,4 @@
+/// <reference types="../../typings/gif" />
 import { APRSSymbol } from './APRSSymbol';
 import { StringUtil } from '../util/StringUtil';
 

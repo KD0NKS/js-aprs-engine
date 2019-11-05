@@ -15,7 +15,7 @@
     },
     "include": [
         "index.ts"
-        , "gif.d.ts"
+        , "typings/gif.d.ts"
         , "src/**/*"
         , "test/**/*"
     ],

@@ -19,6 +19,9 @@
     "reporter": [
       "text",
       "lcov"
+    ],
+    "include": [
+      "src/**/*.ts"
     ]
   },
   "keywords": [
