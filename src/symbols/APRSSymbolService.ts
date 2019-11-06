@@ -609,7 +609,7 @@ export class APRSSymbolService implements IAPRSSymbolService {
      *
      * @returns APRSSymbol - If not found, it will return a crosshair symbol
      */
-    public GetSymbolByKey(key: string): APRSSymbol {
+    public GetSymbolByKey(key?: string): APRSSymbol {
         var retVal = this.symbols.find(x => x.key == key);
 
         if(retVal == null) {
