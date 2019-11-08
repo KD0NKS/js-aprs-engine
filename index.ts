@@ -2,17 +2,20 @@ import { APRSSymbol } from './src/symbols/APRSSymbol';
 import { APRSSymbolService } from './src/symbols/APRSSymbolService';
 import { ConnectionSetting } from './src/connection-settings/ConnectionSetting';
 import { ConnectionSettingsService } from './src/connection-settings/ConnectionSettingsService';
-import ConnectionTypeEnum from './src/connection-settings/ConnectionTypeEnum';
-import { StationSettings } from './src/station-settings/StationSettings';
-//import { StationSettingsService } from './src/station-settings/StationSettingsService';
+import { EngineContainer } from './inversify.config';
+import ConnectionTypes from './src/connection-settings/ConnectionTypes';
+import { IStationSettings } from './src/station-settings/IStationSettings';
 import { StringUtil } from './src/util/StringUtil';
+import TYPES from './src/Types';
+
+let StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
 
 export {
     APRSSymbol
     , APRSSymbolService
     , ConnectionSetting
     , ConnectionSettingsService
-    , ConnectionTypeEnum
+    , ConnectionTypes
     , StationSettings
 //    , StationSettingsService
     , StringUtil

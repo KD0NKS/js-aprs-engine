@@ -1,12 +1,15 @@
 import * as chai from 'chai';
+import { EngineContainer } from '../inversify.config';
+import { IStationSettings } from '../src/station-settings/IStationSettings';
 import { StationSettings } from '../src/station-settings/StationSettings';
+import TYPES from '../src/Types';
 
 const should = chai.should();
 
 describe('StationSettings Tests', () => {
     describe('Test StationSettings constructor.', () => {
         it("Should instantiate a StationSettings instance using all default parameters", () => {
-            const settings: StationSettings = new StationSettings();
+            const settings: StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
 
             settings.should.have.property('callsign').equal('N0CALL');
             settings.should.have.property('passcode').equal(-1);
@@ -14,11 +17,10 @@ describe('StationSettings Tests', () => {
         });
 
         it("Should instantiate a StationSettings instance using given parameters", () => {
-            const settings: StationSettings = {
-                callsign: "T3ST"
-                , passcode: 1234
-                , ssid: '7'
-            };
+            let settings: StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            settings.callsign = "T3ST";
+            settings.passcode = 1234;
+            settings.ssid = '7';
 
             settings.should.have.property('callsign').equal('T3ST');
             settings.should.have.property('passcode').equal(1234);
@@ -26,7 +28,7 @@ describe('StationSettings Tests', () => {
         });
 
         it("Should StationSettings properties set properly", () => {
-            const settings: StationSettings = new StationSettings();
+            let settings: StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
 
             settings.callsign = 'T3ST';
             settings.passcode = 1234;
@@ -35,6 +37,15 @@ describe('StationSettings Tests', () => {
             settings.should.have.property('callsign').equal('T3ST');
             settings.should.have.property('passcode').equal(1234);
             settings.should.have.property('ssid').equal('7');
+        });
+
+        it("Should both instances have the same vaules.", () => {
+            let settings: StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            let settings2: StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+
+            settings.callsign = 'T3ST';
+
+            settings2.should.have.property('callsign').equal("T3ST");
         });
     });
 });

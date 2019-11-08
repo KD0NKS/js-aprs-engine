@@ -1,15 +1,33 @@
 import { ConnectionSetting } from './ConnectionSetting';
+import ConnectionTypes from './ConnectionTypes';
+import { inject, injectable } from 'inversify';
+import { ISSocket } from 'js-aprs-is';
+import 'reflect-metadata';
+import TYPES from '../Types';
 
-export class ConnectionSettingsService {
+@injectable()
+class ConnectionSettingsService {
     private _connections: ConnectionSetting[] = [];
     private _appId: string;
 
-    constructor(appId: string) {
+    // TODO: Inject app version
+    // TODO: Inject app settings
+    constructor(
+            @inject(TYPES.STATION_SETTINGS)
+            appId: string) {
         this._appId = appId;
     }
 
     public addConnection(connection: ConnectionSetting) {
         if(connection != null) {
+            if(connection.connectionType == ConnectionTypes.IS_SOCKET) {
+                /*
+                connection.connection = new ISSocket() {
+
+                };
+                */
+            }
+
             this._connections.push(connection);
         }
     }
@@ -18,3 +36,5 @@ export class ConnectionSettingsService {
         return this._connections;
     }
 }
+
+export { ConnectionSettingsService }

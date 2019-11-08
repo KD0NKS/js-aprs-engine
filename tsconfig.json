@@ -8,16 +8,22 @@
         "removeComments": true,
         "allowJs": false,
         "preserveConstEnums": true,
-        "outDir": "dist",
+        "outDir": "./dist",
+        "rootDir": "./",
         "sourceMap": true,
         "declaration": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": false
     },
     "include": [
-        "index.ts"
-        , "typings/gif.d.ts"
+        "typings/gif.d.ts"
         , "src/**/*"
         , "test/**/*"
+        , "index.ts"
+        , "inversify.config.ts"
     ],
     "exclude": [
         "bin",
