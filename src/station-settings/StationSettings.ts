@@ -1,14 +1,17 @@
 import { injectable } from "inversify";
 import { IStationSettings } from './IStationSettings';
 import 'reflect-metadata';
+import { AbstractObservable } from "../observable/AbstractObservable";
 
 @injectable()
-class StationSettings implements IStationSettings {
-    public callsign: string = "N0CALL";
-    public passcode: number = -1;
-    public ssid: string;
-    public symbol?: string;
-    public symbolOverlay?: string;
+class StationSettings
+        extends AbstractObservable
+        implements IStationSettings {
+    callsign: string = "N0CALL";
+    passcode: number = -1;
+    ssid: string;
+    symbol?: string;
+    symbolOverlay?: string;
 }
 
 export { StationSettings };

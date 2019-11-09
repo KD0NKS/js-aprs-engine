@@ -29,7 +29,11 @@
     "ham radio",
     "amateur radio"
   ],
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "tsc": "./node_modules/.bin/tsc",
     "setup": "npm install",
