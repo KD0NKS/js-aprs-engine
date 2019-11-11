@@ -8,14 +8,14 @@ import { StringUtil } from './src/util/StringUtil';
 import TYPES from './src/Types';
 import { IConnectionManager } from './src/connection-settings/IConnectionManager';
 
-let StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
-let ConnectionManager = EngineContainer.get<IConnectionManager>(TYPES.CONNECTION_MANAGER);
+const StationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS) as IStationSettings;
+//const ConnectionManager = EngineContainer.get<IConnectionManager>(TYPES.CONNECTION_MANAGER) as IConnectionManager;
 
 export {
     APRSSymbol
     , APRSSymbolService
     , ConnectionSetting
-    , ConnectionManager
+//    , ConnectionManager
     , ConnectionTypes
     , StationSettings
 //    , StationSettingsService

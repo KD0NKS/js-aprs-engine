@@ -4,7 +4,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export abstract class AbstractObservable implements IObservable {
-    private _observers: IObserver[] = [];
+    protected _observers: IObserver[] = [];
 
     // TODO: Should be able to pass a function here and use it as a sort of callback.
     public RegisterObserver(observer: IObserver) {
