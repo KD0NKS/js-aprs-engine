@@ -11,20 +11,27 @@ import { IConnectionManager } from './IConnectionManager';
 
 @injectable()
 class ConnectionManager implements IObserver, IConnectionManager {
-    private _appId: string;
     private _settings: StationSettings;
     private _connections: ConnectionSetting[] = [];
 
+    private _appId = 'js-aprs-engine 1.0.0';
 
-    // TODO: Inject app version
-    // TODO: Inject app settings
+
+    // TODO: Need an app version here too
     constructor(
-            @inject(TYPES.STATION_SETTINGS) settings: IStationSettings
-            , appId: string) {
-        this._appId = appId;
+            @inject(TYPES.STATION_SETTINGS) settings: IStationSettings) {
         this._settings = settings as StationSettings;
 
         this._settings.RegisterObserver(this);
+    }
+
+    set appId(value: string) {
+        this._appId = value;
+        this.ChangeEvent();
+    }
+
+    get appId(): string {
+        return this._appId;
     }
 
     /*
@@ -56,6 +63,8 @@ class ConnectionManager implements IObserver, IConnectionManager {
                     }
 
                     c.passcode = this._settings.passcode;
+
+                    c.appId = this.appId;
                 });
     }
 }
