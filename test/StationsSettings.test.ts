@@ -1,15 +1,14 @@
 import * as chai from 'chai';
-import { EngineContainer } from '../inversify.config';
-import { IStationSettings } from '../src/station-settings/IStationSettings';
 import { StationSettings } from '../src/station-settings/StationSettings';
 import TYPES from '../src/Types';
+import { IStationSettings } from '../src/station-settings/IStationSettings';
 
 const should = chai.should();
 
 describe('StationSettings Tests', () => {
     describe('Test StationSettings constructor.', () => {
         it("Should instantiate a StationSettings instance using all default parameters", () => {
-            const settings: IStationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            const settings = StationSettings;
 
             settings.should.have.property('callsign').equal('N0CALL');
             settings.should.have.property('passcode').equal(-1);
@@ -17,7 +16,7 @@ describe('StationSettings Tests', () => {
         });
 
         it("Should instantiate a StationSettings instance using given parameters", () => {
-            let settings: IStationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            let settings: IStationSettings = StationSettings;
             settings.callsign = "T3ST";
             settings.passcode = 1234;
             settings.ssid = '7';
@@ -28,7 +27,7 @@ describe('StationSettings Tests', () => {
         });
 
         it("Should StationSettings properties set properly", () => {
-            let settings: IStationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            let settings: IStationSettings = StationSettings;
 
             settings.callsign = 'T3ST';
             settings.passcode = 1234;
@@ -40,8 +39,8 @@ describe('StationSettings Tests', () => {
         });
 
         it("Should both instances have the same vaules.", () => {
-            let settings: IStationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
-            let settings2: IStationSettings = EngineContainer.get<IStationSettings>(TYPES.STATION_SETTINGS);
+            let settings: IStationSettings = StationSettings;
+            let settings2: IStationSettings = StationSettings;
 
             settings.callsign = 'T3ST';
 

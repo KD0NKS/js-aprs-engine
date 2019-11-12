@@ -12,10 +12,6 @@
         "rootDir": "./",
         "sourceMap": true,
         "declaration": true,
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "forceConsistentCasingInFileNames": true,
         "strict": false
     },
     "include": [

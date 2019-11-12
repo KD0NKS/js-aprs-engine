@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: './index.ts',
     devtool: 'source-map',
     module: {
@@ -21,7 +22,7 @@ module.exports = {
     },
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ],
-        mainFields: [ 'main', 'module' ]
+        //mainFields: [ 'main', 'module' ]
     },
     output: {
         filename: 'index.js',

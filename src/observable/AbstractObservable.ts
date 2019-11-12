@@ -1,9 +1,7 @@
 import { IObservable } from "./IObservable";
 import { IObserver } from './IObserver';
-import { injectable } from "inversify";
 
-@injectable()
-export abstract class AbstractObservable implements IObservable {
+abstract class AbstractObservable implements IObservable {
     protected _observers: IObserver[] = [];
 
     // TODO: Should be able to pass a function here and use it as a sort of callback.
@@ -23,3 +21,5 @@ export abstract class AbstractObservable implements IObservable {
         this._observers.map(x => x.ChangeEvent())
     }
 }
+
+export { AbstractObservable }

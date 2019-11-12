@@ -1,28 +1,28 @@
 import { ConnectionSetting } from './ConnectionSetting';
 import ConnectionTypes from './ConnectionTypes';
-import { inject, injectable } from 'inversify';
 import { ISSocket } from 'js-aprs-is';
-import 'reflect-metadata';
-import TYPES from '../Types';
-import { IStationSettings } from '../station-settings/IStationSettings';
 import { IObserver } from '../observable/IObserver';
-import { StationSettings } from '../station-settings/StationSettings';
 import { IConnectionManager } from './IConnectionManager';
+import { StationSettings } from '../station-settings/StationSettings';
 
-@injectable()
 class ConnectionManager implements IObserver, IConnectionManager {
-    private _settings: StationSettings;
-    private _connections: ConnectionSetting[] = [];
+    private static _instance: ConnectionManager;
 
     private _appId = 'js-aprs-engine 1.0.0';
-
+    private _connections: ConnectionSetting[] = [];
+    private _settings = StationSettings;
 
     // TODO: Need an app version here too
-    constructor(
-            @inject(TYPES.STATION_SETTINGS) settings: IStationSettings) {
-        this._settings = settings as StationSettings;
-
+    private constructor() {
         this._settings.RegisterObserver(this);
+    }
+
+    static get instance() {
+        if(!this._instance) {
+            this._instance = new ConnectionManager();
+        }
+
+        return this._instance;
     }
 
     set appId(value: string) {
@@ -69,4 +69,6 @@ class ConnectionManager implements IObserver, IConnectionManager {
     }
 }
 
-export { ConnectionManager }
+var instance = ConnectionManager.instance;
+
+export { instance as ConnectionManager };
