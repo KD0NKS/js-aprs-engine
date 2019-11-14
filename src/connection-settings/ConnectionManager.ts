@@ -1,15 +1,15 @@
-import { ConnectionSetting } from './ConnectionSetting';
+import { Connection } from './Connection';
 import ConnectionTypes from './ConnectionTypes';
 import { ISSocket } from 'js-aprs-is';
 import { IObserver } from '../observable/IObserver';
-import { IConnectionManager } from './IConnectionManager';
 import { StationSettings } from '../station-settings/StationSettings';
+import { IConnection } from './IConnection';
 
-class ConnectionManager implements IObserver, IConnectionManager {
+class ConnectionManager implements IObserver {
     private static _instance: ConnectionManager;
 
     private _appId = 'js-aprs-engine 1.0.0';
-    private _connections: ConnectionSetting[] = [];
+    private _connections: Connection[] = [];
     private _settings = StationSettings;
 
     // TODO: Need an app version here too
@@ -34,19 +34,26 @@ class ConnectionManager implements IObserver, IConnectionManager {
         return this._appId;
     }
 
-    /*
-    public addConnection(connection: ConnectionSetting) {
-        if(connection != null) {
-            if(connection.connectionType == ConnectionTypes.IS_SOCKET) {
+    public addConnection(setting: IConnection) {
+        var conn: Connection = setting as Connection;
 
+        if(setting != null) {
+            this._connections.push(conn);
+
+            if(conn.connectionType == ConnectionTypes.IS_SOCKET) {
+                // todo validation before creation
+                var connection = new ISSocket(conn.host, conn.port, StationSettings.callsign, StationSettings.passcode, conn.filter, this._appId);
+                conn.connection = connection;
+
+                if(conn.isEnabled === true) {
+                    connection.connect();
+                }
             }
 
-            this._connections.push(connection);
         }
     }
-    */
 
-    public getConnections(): ConnectionSetting[] {
+    public getConnections(): Connection[] {
         return this._connections;
     }
 
