@@ -1,6 +1,5 @@
 import * as chai from 'chai';
 import { StationSettings } from '../src/station-settings/StationSettings';
-import TYPES from '../src/Types';
 import { IStationSettings } from '../src/station-settings/IStationSettings';
 
 const should = chai.should();
