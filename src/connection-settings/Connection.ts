@@ -35,10 +35,6 @@ class Connection implements IConnection {
                 this._isConnected = true;
             });
         };
-
-        this.connection.on('data', (data) => {
-            console.log(data);
-        });
     }
 
     public get isConnected(): boolean {
@@ -54,7 +50,11 @@ class Connection implements IConnection {
 
         if(this.connection) {
             if(this.connectionType === ConnectionTypes.IS_SOCKET) {
-                (this.connection as ISSocket).disconnect();
+                if(this._isEnabled === false) {
+                    (this.connection as ISSocket).disconnect();
+                } else {
+                    (this.connection as ISSocket).connect();
+                }
             }
         }
     }

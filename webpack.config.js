@@ -8,7 +8,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                use: 'ts-loader'
                 /*
                 exclude: [
                     /node_modules/
@@ -27,7 +27,7 @@ module.exports = {
         'js-aprs-fap': 'js-aprs-fap'
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ],
+        extensions: [ '.tsx', '.ts', '.js', '.png', '.svg', '.jpg', '.gif' ],
         mainFields: [ 'main', 'module' ],
         alias: {
             node_modules: path.join(__dirname, 'node_modules/js-aprs-is')
@@ -38,6 +38,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         library: 'jsaprsengine',
         libraryTarget: 'umd',
-        globalObject: 'this'
+        //globalObject: 'this'
     }
 };

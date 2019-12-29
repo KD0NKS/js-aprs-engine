@@ -7,6 +7,10 @@ import { ISSocket } from 'js-aprs-is';
 import { IObserver } from '../observable/IObserver';
 import { StationSettings } from '../station-settings/StationSettings';
 
+/**
+ * Singleton
+ * Listens to StationSettings
+ */
 class ConnectionManager extends EventEmitter implements IObserver {
     private static _instance: ConnectionManager;
 
@@ -40,35 +44,42 @@ class ConnectionManager extends EventEmitter implements IObserver {
     }
 
     public addConnection(setting: IConnection) {
-        var conn: Connection = setting as Connection;
+        if(setting !== null) {
+            var conn: Connection = setting as Connection;
 
-        if(setting != null) {
-            this._connections.push(conn);
-
-            if(conn.connectionType == ConnectionTypes.IS_SOCKET) {
+            if(conn.connectionType === ConnectionTypes.IS_SOCKET) {
                 // todo validation before creation
                 var connection = new ISSocket(conn.host, conn.port, this.getCallsign, this._settings.passcode, conn.filter, this._appId);
                 conn.connection = connection;
 
-                if(conn.isEnabled === true) {
-                    connection.connect();
-                }
-
-                connection.on('packet', (data: string) => {
+                conn.connection.on('packet', (data: string) => {
                     this.emit('data', data);
 
                     if(data.charAt(0) == '#') {
-                        connection.sendLine(connection.userLogin);
+                        (conn.connection as ISSocket).sendLine(connection.userLogin);
                     } else if(data.startsWith('user')) {
-
+                        this.emit('data', data)
                     } else {
                         let msg = this._parser.parseaprs(data);
 
                         this.emit('packet', msg);
                     }
                 })
+
+                conn.connection.on('data', (data: string) => {
+                    this.emit('data', data);
+                })
+
+                conn.connection.on('error', (err: Error) => {
+                    this.emit('error', err);
+                })
+
+                if(conn.isEnabled === true) {
+                    (conn.connection as ISSocket).connect();
+                }
             }
 
+            this._connections.push(conn);
         }
     }
 
@@ -91,7 +102,7 @@ class ConnectionManager extends EventEmitter implements IObserver {
     private get getCallsign(): string {
         let callsign = this._settings.callsign;
 
-        if(this._settings.ssid !== null && this._settings !== undefined) {
+        if(this._settings.ssid !== null && this._settings.ssid !== undefined) {
             callsign = callsign + '-' + this._settings.ssid;
         }
 

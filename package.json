@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "homepage": "https://github.com/KD0NKS/js-aprs-engine",
   "description": "Engine for bundling libraries and settings to run an APRS application.",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KD0NKS/js-aprs-engine.git"
@@ -18,6 +19,10 @@
     "reporter": [
       "text",
       "lcov"
+    ],
+    "include": [
+      "src/**/*.ts",
+      "typings/**/*.d.ts"
     ]
   },
   "keywords": [
@@ -33,21 +38,29 @@
   "scripts": {
     "tsc": "./node_modules/.bin/tsc",
     "setup": "npm install",
-    "build": "tsc",
+    "build": "webpack",
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.0",
-    "@types/chai": "^4.2.4",
-    "@types/node": "^13.1.0",
+    "@types/chai": "^4.2.7",
     "@types/mocha": "^5.2.7",
+    "@types/node": "^13.1.1",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.9",
+    "file-loader": "^5.0.2",
     "mocha": "^6.2.2",
     "nyc": "^15.0.0",
     "source-map-support": "^0.5.16",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.4"
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "js-aprs-fap": "^1.0.0",
+    "js-aprs-is": "^1.0.1"
   }
 }

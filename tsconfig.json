@@ -17,9 +17,7 @@
     "include": [
         "typings/gif.d.ts"
         , "src/**/*"
-        , "test/**/*"
         , "index.ts"
-        , "inversify.config.ts"
     ],
     "exclude": [
         "bin",
