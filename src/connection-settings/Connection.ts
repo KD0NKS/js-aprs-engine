@@ -1,5 +1,5 @@
 import { Socket } from "net";
-import ConnectionTypes from "./ConnectionTypes";
+import ConnectionTypes from "../enums/ConnectionTypes";
 import { ISSocket } from "js-aprs-is";
 import { IConnection } from "./IConnection";
 
@@ -12,30 +12,16 @@ import { IConnection } from "./IConnection";
 class Connection implements IConnection {
     public name: string;
     public connectionType: Symbol
-    public connection: Socket;
 
     public host?: string;
     public port?: number;
     public filter?: string;
 
+    private _connection: Socket;
     private _isConnected: boolean;
     private _isEnabled: boolean = false;
     private DISCONNECT_EVENTS: string[] = ['destroy', 'end', 'close', 'error', 'timeout'];
     private CONNECT_EVENTS: string[] = ['connect'];
-
-    public constructor() {
-        for(var e in this.DISCONNECT_EVENTS) {
-            this.connection.on(e, () => {
-                this._isConnected = false;
-            });
-        };
-
-        for(var e in this.CONNECT_EVENTS) {
-            this.connection.on(e, () => {
-                this._isConnected = true;
-            });
-        };
-    }
 
     public get isConnected(): boolean {
         return this._isConnected;
@@ -48,15 +34,41 @@ class Connection implements IConnection {
     public set isEnabled(isEnabled: boolean) {
         this._isEnabled = isEnabled;
 
-        if(this.connection) {
+        if(this._connection) {
             if(this.connectionType === ConnectionTypes.IS_SOCKET) {
                 if(this._isEnabled === false) {
-                    (this.connection as ISSocket).disconnect();
+                    this._connection.end();  // planning to depricate disconnect
                 } else {
-                    (this.connection as ISSocket).connect();
+                    (this._connection as ISSocket).connect();
                 }
             }
         }
+    }
+
+    public get connection(): Socket {
+        return this._connection;
+    }
+
+    public set connection(conn: Socket) {
+        if (this._connection || this._connection !== null || this.connection !== undefined) {
+            this._connection.end();
+            this._connection.destroy();
+        }
+
+        this._connection = conn;
+
+        // This won't work since connection is null
+        for(var e in this.DISCONNECT_EVENTS) {
+            this._connection.on(e, () => {
+                this._isConnected = false;
+            });
+        };
+
+        for(var e in this.CONNECT_EVENTS) {
+            this._connection.on(e, () => {
+                this._isConnected = true;
+            });
+        };
     }
 }
 
