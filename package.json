@@ -33,7 +33,7 @@
   "scripts": {
     "tsc": "./node_modules/.bin/tsc",
     "setup": "npm install",
-    "build": "tsc",
+    "build": "npm run tsc",
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },

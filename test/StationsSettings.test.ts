@@ -1,6 +1,7 @@
 import * as chai from 'chai';
 import { StationSettings } from '../src/StationSettings';
 
+const expect = chai.expect;
 const should = chai.should();
 
 describe('StationSettings Tests', () => {
